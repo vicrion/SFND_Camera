@@ -1,2 +1,5 @@
 **.DS_Store
 **.vscode
+build*
+vcpkg/
+vcpkg_installed/
