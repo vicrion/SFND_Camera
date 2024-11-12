@@ -19,3 +19,5 @@ target_link_libraries(load_image_2 ${OpenCV_LIBRARIES})
 
 add_executable (load_image_3 src/load_image_3.cpp)
 target_link_libraries(load_image_3 ${OpenCV_LIBRARIES})
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/images/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/images/)

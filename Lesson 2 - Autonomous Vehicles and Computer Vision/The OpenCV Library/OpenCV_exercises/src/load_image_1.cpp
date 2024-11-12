@@ -10,7 +10,7 @@ void loadImage1()
 {
     // load image from file
     cv::Mat img;
-    img = cv::imread("../images/img1.png");
+    img = cv::imread("./images/img1.png");
 
     // show result
     string windowName = "First steps in OpenCV";

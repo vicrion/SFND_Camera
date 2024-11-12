@@ -13,10 +13,12 @@ void loadImage3()
     vector<cv::Mat> imgList;
     for (int i = 5; i <= 9; i++)
     {
+        if (i==7) continue; 
+
         // create file name
         ostringstream imgNumber;                   // #include <sstream>
         imgNumber << setfill('0') << setw(4) << i; // #include <iomanip>
-        string filename = "../images/img" + imgNumber.str() + ".jpg";
+        string filename = "./images/img" + imgNumber.str() + ".jpg";
 
         // load image and store it into a vector
         cv::Mat img;
@@ -29,7 +31,6 @@ void loadImage3()
     cv::namedWindow(windowName, 1); // create window
     for (auto it = imgList.begin(); it != imgList.end(); ++it)
     {
-
         // STUDENT TASK : Prevent image 7 from being displayed
 
         // display image
