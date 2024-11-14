@@ -13,3 +13,6 @@ link_directories(${OpenCV_LIBRARY_DIRS})
 add_definitions(${OpenCV_DEFINITIONS})
 
 add_subdirectory("Lesson 2 - Autonomous Vehicles and Computer Vision/The OpenCV Library/OpenCV_exercises")
+add_subdirectory("Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Lidar/TTC_lidar")
+add_subdirectory("Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Camera/TTC_camera")
+add_subdirectory("Lesson 4 - Tracking Image Features/Intensity Gradient and Filtering/gradient_filtering")

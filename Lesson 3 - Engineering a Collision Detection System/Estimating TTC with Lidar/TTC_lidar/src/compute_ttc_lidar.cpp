@@ -19,11 +19,13 @@ void computeTTCLidar(std::vector<LidarPoint> &lidarPointsPrev,
     double minXPrev = 1e9, minXCurr = 1e9;
     for (auto it = lidarPointsPrev.begin(); it != lidarPointsPrev.end(); ++it)
     {
+        if (std::abs(it->y) > (laneWidth/2) ) continue;
         minXPrev = minXPrev > it->x ? it->x : minXPrev;
     }
 
     for (auto it = lidarPointsCurr.begin(); it != lidarPointsCurr.end(); ++it)
     {
+        if (std::abs(it->y) > (laneWidth/2) ) continue;
         minXCurr = minXCurr > it->x ? it->x : minXCurr;
     }
 
@@ -35,8 +37,8 @@ int main()
 {
 
     std::vector<LidarPoint> currLidarPts, prevLidarPts;
-    readLidarPts("../dat/C22A5_currLidarPts.dat", currLidarPts);
-    readLidarPts("../dat/C22A5_prevLidarPts.dat", prevLidarPts);
+    readLidarPts("./dat/C22A5_currLidarPts.dat", currLidarPts);
+    readLidarPts("./dat/C22A5_prevLidarPts.dat", prevLidarPts);
 
 
     double ttc;

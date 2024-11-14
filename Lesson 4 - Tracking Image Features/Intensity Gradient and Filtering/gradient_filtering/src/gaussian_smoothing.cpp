@@ -10,7 +10,7 @@ void gaussianSmoothing1()
 {
     // load image from file
     cv::Mat img;
-    img = cv::imread("../images/img1gray.png");
+    img = cv::imread("./images/img1gray.png");
   
     // create filter kernel
     float gauss_data[25] = {1, 4, 7, 4, 1,
@@ -18,9 +18,9 @@ void gaussianSmoothing1()
                             7, 26, 41, 26, 7,
                             4, 16, 26, 16, 4,
                             1, 4, 7, 4, 1};
+    
     cv::Mat kernel = cv::Mat(5, 5, CV_32F, gauss_data);
-  
-  	// TODO: Divide each element of the kernel by the sum of all the values in the kernel.
+    kernel = kernel / std::accumulate(std::begin(gauss_data), std::end(gauss_data), 0, std::plus<float>() );
 
     // apply filter
     cv::Mat result;
