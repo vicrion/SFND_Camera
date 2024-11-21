@@ -11,7 +11,7 @@ void cornernessHarris()
 {
     // load image from file
     cv::Mat img;
-    img = cv::imread("../images/img1.png");
+    img = cv::imread("./images/img1.png");
     cv::cvtColor(img, img, cv::COLOR_BGR2GRAY); // convert to grayscale
 
     // Detector parameters
@@ -33,10 +33,11 @@ void cornernessHarris()
     cv::imshow(windowName, dst_norm_scaled);
     cv::waitKey(0);
 
-    // TODO: Your task is to locate local maxima in the Harris response matrix 
+    // Your task is to locate local maxima in the Harris response matrix 
     // and perform a non-maximum suppression (NMS) in a local neighborhood around 
     // each maximum. The resulting coordinates shall be stored in a list of keypoints 
     // of the type `vector<cv::KeyPoint>`.
+    std::vector<cv::KeyPoint> points;
 
 }
 
