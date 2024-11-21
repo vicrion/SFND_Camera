@@ -11,37 +11,36 @@ using namespace std;
 void showLidarTopview()
 {
     std::vector<LidarPoint> lidarPoints;
-    readLidarPts("../dat/C51_LidarPts_0000.dat", lidarPoints);
+    readLidarPts("./dat/C51_LidarPts_0000.dat", lidarPoints);
 
     cv::Size worldSize(10.0, 20.0); // width and height of sensor field in m
-    cv::Size imageSize(1000, 2000); // corresponding top view image in pixel
+    cv::Size imageSize(500, 1000); // corresponding top view image in pixel
 
     // create topview image
     cv::Mat topviewImg(imageSize, CV_8UC3, cv::Scalar(0, 0, 0));
 
     // plot Lidar points into image
+    const float distanceMax = 20;
+
     for (auto it = lidarPoints.begin(); it != lidarPoints.end(); ++it)
     {
         float xw = (*it).x; // world position in m with x facing forward from sensor
         float yw = (*it).y; // world position in m with y facing left from sensor
 
+        float zw = (*it).z; // pcl height
+        if (zw < -1.5) continue;
+
         int y = (-xw * imageSize.height / worldSize.height) + imageSize.height;
         int x = (-yw * imageSize.width / worldSize.width) + imageSize.width / 2;
 
-
-        cv::circle(topviewImg, cv::Point(x, y), 5, cv::Scalar(0, 0, 255), -1);
-        
-        // TODO: 
-        // 1. Change the color of the Lidar points such that 
-        // X=0.0m corresponds to red while X=20.0m is shown as green.
-        // 2. Remove all Lidar points on the road surface while preserving 
-        // measurements on the obstacles in the scene.
+        float div = float(xw) / distanceMax;
+        cv::circle(topviewImg, cv::Point(x, y), 5, cv::Scalar(0, 255*div, 255*(1-div)), -1);
     }
 
     // plot distance markers
     float lineSpacing = 2.0; // gap between distance markers
     int nMarkers = floor(worldSize.height / lineSpacing);
-    for (size_t i = 0; i < nMarkers; ++i)
+    for (int i = 0; i < nMarkers; ++i)
     {
         int y = (-(i * lineSpacing) * imageSize.height / worldSize.height) + imageSize.height;
         cv::line(topviewImg, cv::Point(0, y), cv::Point(imageSize.width, y), cv::Scalar(255, 0, 0));
