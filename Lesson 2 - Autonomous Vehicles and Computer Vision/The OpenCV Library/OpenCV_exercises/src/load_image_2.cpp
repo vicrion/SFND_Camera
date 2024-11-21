@@ -15,7 +15,7 @@ void loadImage2()
         // create file name
         ostringstream imgNumber;                   // #include <sstream>
         imgNumber << setfill('0') << setw(4) << i; // #include <iomanip>
-        string filename = "../images/img" + imgNumber.str() + ".png";
+        string filename = "./images/img" + imgNumber.str() + ".png";
 
         // load and display image
         cv::Mat img;

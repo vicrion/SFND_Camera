@@ -56,11 +56,15 @@ void computeTTCCamera(std::vector<cv::KeyPoint> &kptsPrev, std::vector<cv::KeyPo
 
     // compute camera-based TTC from distance ratios
     double meanDistRatio = std::accumulate(distRatios.begin(), distRatios.end(), 0.0) / distRatios.size();
+    std::sort(distRatios.begin(), distRatios.end());
+    auto sz = distRatios.size();
+    auto medianDistRatio = distRatios[sz/2];
+    if (sz%2==0){
+        medianDistRatio = 0.5 * (distRatios[sz/2] + distRatios[sz/2-1]);
+    }
 
     double dT = 1 / frameRate;
-    TTC = -dT / (1 - meanDistRatio);
-
-    // TODO: STUDENT TASK (replacement for meanDistRatio)
+    TTC = -dT / (1 - medianDistRatio);
 }
 
 int main()
@@ -70,12 +74,12 @@ int main()
     // so that you can focus on TTC computation based on a defined set of keypoints and matches. 
     // The task you need to solve in this example does not require you to look into the data structures.  
     vector<cv::KeyPoint> kptsSource, kptsRef;
-    readKeypoints("../dat/C23A5_KptsSource_AKAZE.dat", kptsSource); // readKeypoints("./dat/C23A5_KptsSource_SHI-BRISK.dat"
-    readKeypoints("../dat/C23A5_KptsRef_AKAZE.dat", kptsRef); // readKeypoints("./dat/C23A5_KptsRef_SHI-BRISK.dat"
+    readKeypoints("./dat/C23A5_KptsSource_AKAZE.dat", kptsSource); // readKeypoints("./dat/C23A5_KptsSource_SHI-BRISK.dat"
+    readKeypoints("./dat/C23A5_KptsRef_AKAZE.dat", kptsRef); // readKeypoints("./dat/C23A5_KptsRef_SHI-BRISK.dat"
 
     // step 2: read pre-recorded keypoint matches from file
     vector<cv::DMatch> matches;
-    readKptMatches("../dat/C23A5_KptMatches_AKAZE.dat", matches); // readKptMatches("./dat/C23A5_KptMatches_SHI-BRISK.dat", matches);
+    readKptMatches("./dat/C23A5_KptMatches_AKAZE.dat", matches); // readKptMatches("./dat/C23A5_KptMatches_SHI-BRISK.dat", matches);
     
     // step 3: compute the time-to-collision based on the pre-recorded data
     double ttc; 
