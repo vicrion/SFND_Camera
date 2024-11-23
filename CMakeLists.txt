@@ -17,3 +17,4 @@ add_subdirectory("Lesson 3 - Engineering a Collision Detection System/Estimating
 add_subdirectory("Lesson 3 - Engineering a Collision Detection System/Estimating TTC with Camera/TTC_camera")
 add_subdirectory("Lesson 4 - Tracking Image Features/Intensity Gradient and Filtering/gradient_filtering")
 add_subdirectory("Lesson 6 - Combining Camera and Lidar/Lidar-to-Camera Point Projection/lidar_to_camera")
+add_subdirectory("Lesson 6 - Combining Camera and Lidar/Object Detection with YOLO/detect_objects")
