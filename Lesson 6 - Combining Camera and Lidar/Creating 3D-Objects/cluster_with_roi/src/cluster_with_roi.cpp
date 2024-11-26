@@ -55,7 +55,7 @@ void showLidarTopview(std::vector<LidarPoint> &lidarPoints, cv::Size worldSize, 
     // plot distance markers
     float lineSpacing = 2.0; // gap between distance markers
     int nMarkers = floor(worldSize.height / lineSpacing);
-    for (size_t i = 0; i < nMarkers; ++i)
+    for (int i = 0; i < nMarkers; ++i)
     {
         int y = (-(i * lineSpacing) * imageSize.height / worldSize.height) + imageSize.height;
         cv::line(topviewImg, cv::Point(0, y), cv::Point(imageSize.width, y), cv::Scalar(255, 0, 0));
@@ -125,17 +125,17 @@ void clusterLidarWithROI(std::vector<BoundingBox> &boundingBoxes, std::vector<Li
 int main()
 {
     std::vector<LidarPoint> lidarPoints;
-    readLidarPts("../dat/C53A3_currLidarPts.dat", lidarPoints);
+    readLidarPts("./dat/C53A3_currLidarPts.dat", lidarPoints);
 
     std::vector<BoundingBox> boundingBoxes;
-    readBoundingBoxes("../dat/C53A3_currBoundingBoxes.dat", boundingBoxes);
+    readBoundingBoxes("./dat/C53A3_currBoundingBoxes.dat", boundingBoxes);
 
     clusterLidarWithROI(boundingBoxes, lidarPoints);
     for (auto it = boundingBoxes.begin(); it != boundingBoxes.end(); ++it)
     {
         if (it->lidarPoints.size() > 0)
         {
-            showLidarTopview(it->lidarPoints, cv::Size(10.0, 25.0), cv::Size(1000, 2000));
+            showLidarTopview(it->lidarPoints, cv::Size(10.0, 25.0), cv::Size(500, 1000));
         }
     }   
 

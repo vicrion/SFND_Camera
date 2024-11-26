@@ -29,11 +29,11 @@ void loadCalibrationData(cv::Mat &P_rect_00, cv::Mat &R_rect_00, cv::Mat &RT)
 void projectLidarToCamera2()
 {
     // load image from file
-    cv::Mat img = cv::imread("../images/0000000000.png");
+    cv::Mat img = cv::imread("./images/0000000000.png");
 
     // load Lidar points from file
     std::vector<LidarPoint> lidarPoints;
-    readLidarPts("../dat/C51_LidarPts_0000.dat", lidarPoints);
+    readLidarPts("./dat/C51_LidarPts_0000.dat", lidarPoints);
 
     // store calibration data in OpenCV matrices
     cv::Mat P_rect_00(3,4,cv::DataType<double>::type); // 3x4 projection matrix after rectification
@@ -50,13 +50,25 @@ void projectLidarToCamera2()
 
     // TODO
     for(auto it=lidarPoints.begin(); it!=lidarPoints.end(); ++it) {
+        float maxX = 25.0, maxY = 6.0, minZ = -1.4; 
+        if(it->x > maxX || it->x < 0.0 || abs(it->y) > maxY || it->z < minZ || it->r<0.01 )
+        {
+            continue; // skip to next point
+        }
         // 1. Convert current Lidar point into homogeneous coordinates and store it in the 4D variable X.
+        X.at<double>(0,0) = (*it).x;
+        X.at<double>(0,1) = (*it).y;
+        X.at<double>(0,2) = (*it).z;
+        X.at<double>(0,3) = 1.0;
 
         // 2. Then, apply the projection equation as detailed in lesson 5.1 to map X onto the image plane of the camera. 
         // Store the result in Y.
-
+        Y = P_rect_00 * R_rect_00 * RT * X;
+        
         // 3. Once this is done, transform Y back into Euclidean coordinates and store the result in the variable pt.
         cv::Point pt;
+        pt.x = Y.at<double>(0,0) / Y.at<double>(0,2);
+        pt.y = Y.at<double>(0,1) / Y.at<double>(0,2);
 
         float val = it->x;
         float maxVal = 20.0;

@@ -13,13 +13,13 @@ using namespace std;
 void detectObjects2()
 {
     // load image from file
-    cv::Mat img = cv::imread("../images/s_thrun.jpg");
+    cv::Mat img = cv::imread("./images/s_thrun.jpg");
 
     // load class names from file
-    string yoloBasePath = "../dat/yolo/";
+    string yoloBasePath = "./dat/yolo/";
     string yoloClassesFile = yoloBasePath + "coco.names";
     string yoloModelConfiguration = yoloBasePath + "yolov3.cfg";
-    string yoloModelWeights = yoloBasePath + "yolov3.weights"; 
+    string yoloModelWeights = yoloBasePath + "yolov3_downloaded.weights"; 
 
     vector<string> classes;
     ifstream ifs(yoloClassesFile.c_str());
